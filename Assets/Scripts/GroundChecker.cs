@@ -11,7 +11,7 @@ public class GroundChecker : MonoBehaviour
         _distance = Mathf.Clamp(_distance, 0, float.MaxValue);
     }
 
-    public bool TryCheckGround(out Vector3 groundNormal)
+    public bool IsGrounded(out Vector3 groundNormal)
     {
         if (Physics.Raycast(_groundPoint.position, Vector3.down, out RaycastHit hit, _distance, _mask))
         {

@@ -1,6 +1,6 @@
 using UnityEngine;
 
-[RequireComponent (typeof(GroundChecker))]
+[RequireComponent(typeof(GroundChecker))]
 [RequireComponent(typeof(Rigidbody))]
 public class BotMover : Mover
 {
@@ -8,6 +8,13 @@ public class BotMover : Mover
 
     private Rigidbody _rigidBody;
     private GroundChecker _checker;
+
+    private void OnValidate()
+    {
+        float maxClimbValue = 89f;
+
+        _maxClimbAngle = Mathf.Clamp(_maxClimbAngle, 0, maxClimbValue);
+    }
 
     private void Awake()
     {
@@ -17,7 +24,7 @@ public class BotMover : Mover
 
     protected override void Move()
     {
-        if (_checker.TryCheckGround(out Vector3 groundNormal))
+        if (_checker.IsGrounded(out Vector3 groundNormal))
         {
             float angle = Vector3.Angle(Vector3.up, groundNormal);
             Vector3 movementVelocity = CalculateMovementVelocity(groundNormal, angle);
